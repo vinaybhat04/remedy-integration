@@ -134,10 +134,9 @@ public class JiraTicketerPlugin implements TicketingPlugin {
         try (JiraRestClient client = getConnection()) {
             return getInternal(ticketId, client);
         } catch (IOException | PluginException e) {
-            // TODO: Do we need add PluginException in API.
-            throw new RuntimeException();
-            //throw new PluginException(e);
+             LOG.error("Exception while getting Ticket details with ticketId {} ", e);
         }
+        return null;
     }
 
     private Ticket getInternal(String ticketId, JiraRestClient jira) throws PluginException {
@@ -230,15 +229,17 @@ public class JiraTicketerPlugin implements TicketingPlugin {
     * @see org.opennms.api.integration.ticketing.Plugin#saveOrUpdate(org.opennms.api.integration.ticketing.Ticket)
     */
     @Override
-    public void saveOrUpdate(Ticket ticket) {
+    public String saveOrUpdate(Ticket ticket) {
         try (JiraRestClient client = getConnection()) {
-            saveOrUpdateInternal(ticket, client);
+           String ticketId = saveOrUpdateInternal(ticket, client);
+           return ticketId;
         } catch (IOException | PluginException e) {
             //throw new PluginException(e);
         }
+        return null;
     }
 
-    private void saveOrUpdateInternal(Ticket ticket, JiraRestClient jira) throws PluginException {
+    private String saveOrUpdateInternal(Ticket ticket, JiraRestClient jira) throws PluginException {
         Config config = getConfig();
         if (ticket.getId() == null || ticket.getId().equals("")) {
             // If we can't find a ticket with the specified ID then create one.
@@ -258,9 +259,7 @@ public class JiraTicketerPlugin implements TicketingPlugin {
                 throw new PluginException("Failed to create issue.", e);
             }
             LOG.info("created ticket " + createdIssue);
-            //TODO: Hacky. Do we really need to update id here ?
-            Ticket createdTicket = ImmutableTicket.newBuilderFrom(ticket).setId(createdIssue.getKey()).build();
-            ticket = createdTicket;
+            return createdIssue.getKey();
 
         } else {
             // Otherwise update the existing ticket
@@ -291,7 +290,7 @@ public class JiraTicketerPlugin implements TicketingPlugin {
                         } catch (InterruptedException | ExecutionException e) {
                             throw new PluginException("Failed to get resolve issue with id:" + issue.getId(), e);
                         }
-                        return;
+                        return ticket.getId();
                     }
                 }
                 LOG.warn("Could not resolve ticket {}, no '{}' operation available.", ticket.getId(), getConfig().getResolveTransitionName());
@@ -306,12 +305,13 @@ public class JiraTicketerPlugin implements TicketingPlugin {
                         } catch (InterruptedException | ExecutionException e) {
                             throw new PluginException("Failed to reopen issue with id:" + issue.getId(), e);
                         }
-                        return;
+                        return ticket.getId();
                     }
                 }
                 LOG.warn("Could not reopen ticket {}, no '{}' operation available.", ticket.getId(), getConfig().getReopentransitionName());
             }
         }
+        return null;
     }
 
     /**
