@@ -149,17 +149,12 @@ public class JiraTicketerPlugin implements TicketingPlugin {
         }
 
         if (issue != null) {
-            Ticket ticket = ImmutableTicket.newBuilder()
+            return ImmutableTicket.newBuilder()
                                     .setId(issue.getKey())
                                     .setSummary(issue.getSummary())
                                     .setDetails(issue.getDescription())
                                     .setState(getStateFromStatusName(issue.getStatus().getName())).build();
 
-            // TODO: Do we need this ?
-            //ticket.setModificationTimestamp(String.valueOf(issue.getUpdateDate().toDate().getTime()));
-
-
-            return ticket;
         } else {
             return null;
         }

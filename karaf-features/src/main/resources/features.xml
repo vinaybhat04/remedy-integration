@@ -10,9 +10,6 @@
     <bundle>mvn:org.opennms.plugin.ticketer.jira/org.opennms.plugin.ticketer.jira.client/${project.version}</bundle>
     <bundle>mvn:joda-time/joda-time/${jodaTimeVersion}</bundle>
     <bundle>mvn:javax.ws.rs/javax.ws.rs-api/2.1.1</bundle>
-<!--    <bundle>mvn:org.apache.karaf.shell/org.apache.karaf.shell.core/${karaf.version}</bundle>
-    <bundle>mvn:org.apache.karaf.shell/org.apache.karaf.shell.console/${karaf.version}</bundle>
-    <bundle>mvn:org.jline/jline/3.6.0</bundle>-->
     <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spring-beans/${springVersion}</bundle>
     <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spring-core/${springVersion}</bundle>
     <bundle>mvn:com.google.guava/guava/${guavaVersion}</bundle>
