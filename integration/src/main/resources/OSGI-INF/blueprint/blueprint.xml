@@ -4,7 +4,7 @@
 
 
   <service interface="org.opennms.integration.api.v1.ticketing.TicketingPlugin">
-    <bean class="org.opennms.plugin.ticketer.jira.integration.JiraTicketerPlugin"/>
+    <bean class="org.opennms.plugin.ticketer.jira.integration.RemedyTicketerPlugin"/>
   </service>
 
 </blueprint>

@@ -3,15 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>org.opennms.plugin.ticketer.jira</artifactId>
+    <artifactId>org.opennms.plugin.ticketer.remedy</artifactId>
     <groupId>org.opennms.plugin.ticketer</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.opennms.plugin.ticketer.jira</groupId>
-  <artifactId>org.opennms.plugin.ticketer.jira.karaf-features</artifactId>
-  <name>OpenNMS :: Plugins :: Ticketer :: Jira :: Karaf Features</name>
+  <groupId>org.opennms.plugin.ticketer.remedy</groupId>
+  <artifactId>org.opennms.plugin.ticketer.remedy.karaf-features</artifactId>
+  <name>OpenNMS :: Plugins :: Ticketer :: Remedy :: Karaf Features</name>
   <packaging>pom</packaging>
 
   <build>
@@ -84,7 +84,7 @@
                 <feature>framework</feature>
               </framework>
               <features>
-                <feature>opennms-plugins-jira-ticketer</feature>
+                <feature>opennms-plugins-remedy-ticketer</feature>
               </features>
             </configuration>
           </execution>
@@ -103,8 +103,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.opennms.plugin.ticketer.jira</groupId>
-      <artifactId>org.opennms.plugin.ticketer.jira.integration</artifactId>
+      <groupId>org.opennms.plugin.ticketer.remedy</groupId>
+      <artifactId>org.opennms.plugin.ticketer.remedy.integration</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>

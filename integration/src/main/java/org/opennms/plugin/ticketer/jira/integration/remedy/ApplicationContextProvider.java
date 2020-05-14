@@ -1,8 +1,8 @@
 /*******************************************************************************
  * This file is part of OpenNMS(R).
  *
- * Copyright (C) 2017-2017 The OpenNMS Group, Inc.
- * OpenNMS(R) is Copyright (C) 1999-2017 The OpenNMS Group, Inc.
+ * Copyright (C) 2013-2014 The OpenNMS Group, Inc.
+ * OpenNMS(R) is Copyright (C) 1999-2014 The OpenNMS Group, Inc.
  *
  * OpenNMS(R) is a registered trademark of The OpenNMS Group, Inc.
  *
@@ -25,30 +25,30 @@
  *     http://www.opennms.org/
  *     http://www.opennms.com/
  *******************************************************************************/
+package org.opennms.plugin.ticketer.jira.integration.remedy;
 
-package org.opennms.plugin.ticketer.jira.integration.fieldmapper;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
-import java.util.Map;
-import java.util.function.Supplier;
+/**
+ * ApplicationContextProvider class which returns spring's applicationcontext bean
+ * @author Vinay Bhat
+ *
+ */
+public class ApplicationContextProvider implements ApplicationContextAware {
 
-import com.atlassian.jira.rest.client.api.domain.FieldSchema;
+	private static ApplicationContext context;
 
-public class GroupFieldMapper extends AbstractModifyableOptionKeyFieldMapper {
+	@Override
+	public void setApplicationContext(ApplicationContext ac) throws BeansException {
+		context = ac;
+	}
 
-    public GroupFieldMapper(Supplier<Map<String, String>> optionKeySupplier) {
-        super(optionKeySupplier);
-    }
+	public static ApplicationContext getContext() {
+		return context;
+	}
+	
+	
 
-    @Override
-    public boolean matches(FieldSchema schema) {
-        return "group".equals(schema.getType()) || "group".equals(schema.getItems());
-    }
-
-    @Override
-    public Object mapToFieldValue(String fieldId, FieldSchema schema, String attributeValue) {
-        if ("array".equals(schema.getType())) {
-            return new ArrayWrapper().map(item -> createComplexIssueInputField(fieldId, "name", item), attributeValue);
-        }
-        return createComplexIssueInputField(fieldId, "name", attributeValue);
-    }
 }
